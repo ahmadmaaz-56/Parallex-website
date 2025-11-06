@@ -3,41 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Parallax Website</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Parallax Experience</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:wght@400;700&display=swap">
+    <!--link rel="stylesheet" href="styles.css"-->
     <style>
-        /* Reset some default styles */
-body, html {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    color: #333;
+        /* Base Styles */
+:root {
+    --primary-color: #4a6fa5;
+    --secondary-color: #166088;
+    --accent-color: #4fc3f7;
+    --dark-color: #1a2639;
+    --light-color: #f8f9fa;
+    --text-color: #333;
+    --text-light: #f8f9fa;
+    --transition-speed: 0.3s;
 }
 
-/* Parallax sections */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.7;
+    color: var(--text-color);
+    overflow-x: hidden;
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Navigation */
+#main-nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: rgba(26, 38, 57, 0.9);
+    z-index: 1000;
+    transition: all var(--transition-speed) ease;
+}
+
+#main-nav.scrolled {
+    background-color: var(--dark-color);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+#main-nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+}
+
+.logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: var(--light-color);
+    text-decoration: none;
+}
+
+.logo span {
+    color: var(--accent-color);
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+}
+
+.nav-links li {
+    margin-left: 30px;
+}
+
+.nav-links a {
+    color: var(--light-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color var(--transition-speed);
+}
+
+.nav-links a:hover {
+    color: var(--accent-color);
+}
+
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--light-color);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* Parallax Sections */
 .parallax-section {
-    /* Fixed background */
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    
-    /* Full height */
     height: 100vh;
-    
-    /* Flexbox for centering content */
     display: flex;
     align-items: center;
     justify-content: center;
-    
-    /* Text styling */
     text-align: center;
-    color: white;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    color: var(--text-light);
+    position: relative;
+    overflow: hidden;
 }
 
-/* Individual section backgrounds */
+.parallax-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.parallax-section .content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    padding: 40px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.parallax-section .content.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+/* Previous CSS remains identical except for these background image changes */
+
 .section1 {
     background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb');
 }
@@ -54,78 +164,643 @@ body, html {
     background-image: url('https://images.unsplash.com/photo-1501785888041-af3ef285b470');
 }
 
-/* Content within parallax sections */
-.content {
-    max-width: 800px;
-    padding: 20px;
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 10px;
+/* All other CSS remains exactly the same as in the enhanced version */
+
+/* Scroll Indicator */
+.scroll-indicator {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 50px;
+    border: 2px solid var(--light-color);
+    border-radius: 15px;
 }
 
-/* Regular content sections */
+.scroll-indicator::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    width: 6px;
+    height: 6px;
+    background: var(--light-color);
+    border-radius: 50%;
+    transform: translateX(-50%);
+    animation: scrollBounce 2s infinite;
+}
+
+@keyframes scrollBounce {
+    0% { transform: translate(-50%, 0); opacity: 1; }
+    100% { transform: translate(-50%, 15px); opacity: 0.5; }
+}
+
+/* Text Sections */
 .text-section {
-    padding: 60px 20px;
-    background: #f4f4f4;
-    color: #333;
-    text-align: center;
+    padding: 100px 0;
 }
 
-.text-section h2 {
+.text-section.dark-bg {
+    background-color: var(--dark-color);
+    color: var(--text-light);
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 60px;
+    font-size: 2.5rem;
+    color: inherit;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: var(--accent-color);
+    margin: 15px auto 0;
+}
+
+/* Grid Layout */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+/* Cards */
+.card {
+    background: white;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.card.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.card-icon {
+    font-size: 2.5rem;
     margin-bottom: 20px;
 }
 
-.text-section p {
+/* Buttons */
+.btn {
+    display: inline-block;
+    background: var(--accent-color);
+    color: white;
+    padding: 12px 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: 20px;
+    transition: all var(--transition-speed);
+    border: 2px solid var(--accent-color);
+}
+
+.btn:hover {
+    background: transparent;
+    color: var(--accent-color);
+    transform: translateY(-3px);
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid white;
+    color: white;
+}
+
+.btn-outline:hover {
+    background: white;
+    color: var(--dark-color);
+}
+
+/* Testimonials */
+.testimonial-slider {
+    position: relative;
     max-width: 800px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.testimonial {
+    display: none;
+    text-align: center;
+    padding: 30px;
+}
+
+.testimonial.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.client {
+    font-style: italic;
+    margin-top: 20px;
+    color: var(--accent-color);
+}
+
+.slider-controls {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    gap: 20px;
+}
+
+.slider-controls button {
+    background: none;
+    border: none;
+    color: var(--accent-color);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color var(--transition-speed);
+}
+
+.slider-controls button:hover {
+    color: var(--secondary-color);
+}
+
+/* Contact Form */
+.contact-form {
+    max-width: 600px;
     margin: 0 auto;
 }
 
-/* Responsive adjustments */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: inherit;
+    transition: border-color var(--transition-speed);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+/* Footer */
+footer {
+    background: var(--dark-color);
+    color: var(--text-light);
+    padding: 30px 0;
+    text-align: center;
+}
+
+.back-to-top {
+    color: var(--accent-color);
+    text-decoration: none;
+    margin-top: 15px;
+    display: inline-block;
+}
+
+/* Social Icons */
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    color: white;
+    text-decoration: none;
+    transition: all var(--transition-speed);
+}
+
+.social-icon:hover {
+    background: var(--accent-color);
+    transform: translateY(-3px);
+}
+
+/* Animations */
+.animate-fade-in {
+    opacity: 0;
+    animation: fadeIn 1s ease forwards;
+}
+
+.animate-slide-up {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideUp 0.8s ease forwards 0.3s;
+}
+
+.animate-slide-left {
+    opacity: 0;
+    transform: translateX(-50px);
+    animation: slideLeft 0.8s ease forwards;
+}
+
+.animate-slide-right {
+    opacity: 0;
+    transform: translateX(50px);
+    animation: slideRight 0.8s ease forwards 0.3s;
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideLeft {
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideRight {
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .parallax-section .content {
+        padding: 30px;
+    }
+}
+
 @media (max-width: 768px) {
     .parallax-section {
         background-attachment: scroll;
+    }
+    
+    .menu-toggle {
+        display: block;
+    }
+    
+    .nav-links {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 70px);
+        background: var(--dark-color);
+        flex-direction: column;
+        align-items: center;
+        padding-top: 30px;
+        transition: left 0.3s ease;
+    }
+    
+    .nav-links.active {
+        left: 0;
+    }
+    
+    .nav-links li {
+        margin: 15px 0;
+    }
+    
+    .grid-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 576px) {
+    .parallax-section .content {
+        padding: 20px;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+    }
+    
+    .btn {
+        padding: 10px 25px;
     }
 }
     </style>
 </head>
 <body>
-    <div class="parallax-section section1">
+    <nav id="main-nav">
+        <div class="container">
+            <a href="#" class="logo">Parallax<span>Pro</span></a>
+            <ul class="nav-links">
+                <li><a href="#section1">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="menu-toggle">☰</button>
+        </div>
+    </nav>
+
+    <div class="parallax-section section1" id="section1">
         <div class="content">
-            <h1>Welcome to Our Parallax Website</h1>
-            <p>Scroll down to see the effect</p>
+            <h1 class="animate-fade-in">Elevate Your Digital Presence</h1>
+            <p class="animate-slide-up">Immersive parallax experiences that captivate your audience</p>
+            <a href="#about" class="btn animate-slide-up">Explore More</a>
+        </div>
+        <div class="scroll-indicator"></div>
+    </div>
+    
+    <div class="text-section" id="about">
+        <div class="container">
+            <h2 class="section-title">About Our Vision</h2>
+            <div class="grid-container">
+                <div class="card animate-card">
+                    <div class="card-icon">🌐</div>
+                    <h3>Web Innovation</h3>
+                    <p>Pushing boundaries with cutting-edge web technologies to create memorable experiences.</p>
+                </div>
+                <div class="card animate-card">
+                    <div class="card-icon">🎨</div>
+                    <h3>Design Excellence</h3>
+                    <p>Beautiful, intuitive interfaces that reflect your brand's unique personality.</p>
+                </div>
+                <div class="card animate-card">
+                    <div class="card-icon">⚡</div>
+                    <h3>Performance</h3>
+                    <p>Lightning-fast websites optimized for all devices without compromising quality.</p>
+                </div>
+            </div>
         </div>
     </div>
     
-    <div class="text-section">
-        <h2>First Content Section</h2>
-        <p>This is some regular content between parallax sections. The background images will stay fixed as you scroll.</p>
-    </div>
-    
-    <div class="parallax-section section2">
+    <div class="parallax-section section2" id="services">
         <div class="content">
-            <h2>Second Parallax Section</h2>
+            <h2 class="animate-fade-in">Our Services</h2>
+            <div class="service-list">
+                <div class="service-item animate-slide-left">
+                    <h3>Parallax Development</h3>
+                    <p>Custom scrolling effects tailored to your content</p>
+                </div>
+                <div class="service-item animate-slide-right">
+                    <h3>Interactive Design</h3>
+                    <p>Engaging interfaces that tell your story</p>
+                </div>
+            </div>
         </div>
     </div>
     
-    <div class="text-section">
-        <h2>Second Content Section</h2>
-        <p>More interesting content here. Notice how the background images create depth as you scroll.</p>
+    <div class="text-section dark-bg">
+        <div class="container">
+            <h2 class="section-title">Client Success Stories</h2>
+            <div class="testimonial-slider">
+                <div class="testimonial active">
+                    <p>"The parallax website increased our engagement by 200%!"</p>
+                    <div class="client">— Sarah K., TechStart</div>
+                </div>
+                <div class="testimonial">
+                    <p>"Our bounce rate decreased dramatically with the new design."</p>
+                    <div class="client">— Michael T., Creative Solutions</div>
+                </div>
+                <div class="testimonial">
+                    <p>"The most beautiful website we've ever had."</p>
+                    <div class="client">— Jennifer L., Luxe Brands</div>
+                </div>
+            </div>
+            <div class="slider-controls">
+                <button class="slider-prev">❮</button>
+                <button class="slider-next">❯</button>
+            </div>
+        </div>
     </div>
     
     <div class="parallax-section section3">
         <div class="content">
-            <h2>Third Parallax Section</h2>
+            <h2 class="animate-fade-in">Let's Create Something Amazing</h2>
+            <a href="#contact" class="btn btn-outline animate-slide-up">Get Started</a>
         </div>
     </div>
     
-    <div class="text-section">
-        <h2>Final Content Section</h2>
-        <p>The parallax effect adds a modern, engaging feel to your website.</p>
+    <div class="text-section" id="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <form id="contact-form" class="contact-form">
+                <div class="form-group">
+                    <input type="text" id="name" placeholder="Your Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="email" placeholder="Your Email" required>
+                </div>
+                <div class="form-group">
+                    <textarea id="message" placeholder="Your Message" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="btn">Send Message</button>
+            </form>
+        </div>
     </div>
     
     <div class="parallax-section section4">
         <div class="content">
-            <h2>Thank You!</h2>
+            <h2 class="animate-fade-in">Thank You!</h2>
+            <div class="social-links">
+                <a href="#" class="social-icon">f</a>
+                <a href="#" class="social-icon">in</a>
+                <a href="#" class="social-icon">t</a>
+                <a href="#" class="social-icon">ig</a>
+            </div>
         </div>
     </div>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 ParallaxPro. All rights reserved.</p>
+            <a href="#" class="back-to-top">↑ Back to Top</a>
+        </div>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    // Navigation scroll effect
+    const nav = document.getElementById('main-nav');
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 100) {
+            nav.classList.add('scrolled');
+        } else {
+            nav.classList.remove('scrolled');
+        }
+    });
+    
+    // Mobile menu toggle
+    menuToggle.addEventListener('click', function() {
+        navLinks.classList.toggle('active');
+    });
+    
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            if (this.classList.contains('menu-toggle')) return;
+            
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop - 70,
+                    behavior: 'smooth'
+                });
+                
+                // Close mobile menu if open
+                navLinks.classList.remove('active');
+            }
+        });
+    });
+    
+    // Back to top button
+    const backToTop = document.querySelector('.back-to-top');
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 300) {
+            backToTop.style.display = 'block';
+        } else {
+            backToTop.style.display = 'none';
+        }
+    });
+    
+    backToTop.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+    
+    // Testimonial slider
+    const testimonials = document.querySelectorAll('.testimonial');
+    const prevBtn = document.querySelector('.slider-prev');
+    const nextBtn = document.querySelector('.slider-next');
+    let currentTestimonial = 0;
+    
+    function showTestimonial(index) {
+        testimonials.forEach(testimonial => {
+            testimonial.classList.remove('active');
+        });
+        
+        testimonials[index].classList.add('active');
+        currentTestimonial = index;
+    }
+    
+    prevBtn.addEventListener('click', function() {
+        let newIndex = currentTestimonial - 1;
+        if (newIndex < 0) newIndex = testimonials.length - 1;
+        showTestimonial(newIndex);
+    });
+    
+    nextBtn.addEventListener('click', function() {
+        let newIndex = currentTestimonial + 1;
+        if (newIndex >= testimonials.length) newIndex = 0;
+        showTestimonial(newIndex);
+    });
+    
+    // Auto-rotate testimonials
+    setInterval(function() {
+        let newIndex = currentTestimonial + 1;
+        if (newIndex >= testimonials.length) newIndex = 0;
+        showTestimonial(newIndex);
+    }, 5000);
+    
+    // Scroll animations
+    function checkScroll() {
+        const parallaxContents = document.querySelectorAll('.parallax-section .content');
+        const cards = document.querySelectorAll('.card');
+        
+        parallaxContents.forEach(content => {
+            const contentPosition = content.getBoundingClientRect().top;
+            const screenPosition = window.innerHeight / 1.3;
+            
+            if (contentPosition < screenPosition) {
+                content.classList.add('visible');
+            }
+        });
+        
+        cards.forEach((card, index) => {
+            const cardPosition = card.getBoundingClientRect().top;
+            const screenPosition = window.innerHeight / 1.3;
+            
+            if (cardPosition < screenPosition) {
+                setTimeout(() => {
+                    card.classList.add('visible');
+                }, index * 200);
+            }
+        });
+    }
+    
+    window.addEventListener('scroll', checkScroll);
+    window.addEventListener('load', checkScroll);
+    
+    // Form submission
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            // Here you would typically send the data to a server
+            console.log('Form submitted:', { name, email, message });
+            
+            // Show success message
+            alert('Thank you for your message! We will get back to you soon.');
+            
+            // Reset form
+            contactForm.reset();
+        });
+    }
+    
+    // Preload images for better performance
+    function preloadImages() {
+        const images = [
+            'images/hero-bg-optimized.jpg',
+            'images/services-bg-optimized.jpg',
+            'images/cta-bg-optimized.jpg',
+            'images/footer-bg-optimized.jpg'
+        ];
+        
+        images.forEach(src => {
+            const img = new Image();
+            img.src = src;
+        });
+    }
+    
+    preloadImages();
+});
+    </script>
+
+    <!--script src="script.js"></script-->
 </body>
 </html>
+

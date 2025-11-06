@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parallax Website</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Reset some default styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* Parallax sections */
+.parallax-section {
+    /* Fixed background */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+    /* Full height */
+    height: 100vh;
+    
+    /* Flexbox for centering content */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* Text styling */
+    text-align: center;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Individual section backgrounds */
+.section1 {
+    background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb');
+}
+
+.section2 {
+    background-image: url('https://images.unsplash.com/photo-1519125323398-675f0ddb6308');
+}
+
+.section3 {
+    background-image: url('https://images.unsplash.com/photo-1429087969512-1e85aab2683d');
+}
+
+.section4 {
+    background-image: url('https://images.unsplash.com/photo-1501785888041-af3ef285b470');
+}
+
+/* Content within parallax sections */
+.content {
+    max-width: 800px;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+}
+
+/* Regular content sections */
+.text-section {
+    padding: 60px 20px;
+    background: #f4f4f4;
+    color: #333;
+    text-align: center;
+}
+
+.text-section h2 {
+    margin-bottom: 20px;
+}
+
+.text-section p {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .parallax-section {
+        background-attachment: scroll;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="parallax-section section1">
+        <div class="content">
+            <h1>Welcome to Our Parallax Website</h1>
+            <p>Scroll down to see the effect</p>
+        </div>
+    </div>
+    
+    <div class="text-section">
+        <h2>First Content Section</h2>
+        <p>This is some regular content between parallax sections. The background images will stay fixed as you scroll.</p>
+    </div>
+    
+    <div class="parallax-section section2">
+        <div class="content">
+            <h2>Second Parallax Section</h2>
+        </div>
+    </div>
+    
+    <div class="text-section">
+        <h2>Second Content Section</h2>
+        <p>More interesting content here. Notice how the background images create depth as you scroll.</p>
+    </div>
+    
+    <div class="parallax-section section3">
+        <div class="content">
+            <h2>Third Parallax Section</h2>
+        </div>
+    </div>
+    
+    <div class="text-section">
+        <h2>Final Content Section</h2>
+        <p>The parallax effect adds a modern, engaging feel to your website.</p>
+    </div>
+    
+    <div class="parallax-section section4">
+        <div class="content">
+            <h2>Thank You!</h2>
+        </div>
+    </div>
+</body>
+</html>
